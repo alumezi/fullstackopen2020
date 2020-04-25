@@ -13,25 +13,24 @@ const App = () => {
   return (
     <div>
       <Header course={course} />
-      <Content data={[
-        { part: part1, exercise: exercises1 },
-        { part: part2, exercise: exercises2 },
-        { part: part3, exercise: exercises3 }]} />
+      <Part name={part1} number={exercises1}/>
+      <Part name={part2} number={exercises2}/>
+      <Part name={part3} number={exercises3}/>
       <Total exercises={exercises1 + exercises2 + exercises3} />
     </div>
   )
 }
 
-const Header = (props) => {
-  return <h1>{props.course}</h1>;
+const Header = ({course}) => {
+  return <h1>{course}</h1>;
 }
 
-const Content = (props) => {
-  return props.data.map(item => <p key={item.part}>{item.part} {item.exercise}</p>);
+const Part = ({name, number}) => {
+return <p>{name} {number}</p>
 }
 
-const Total = (props) => {
-  return <p>Number of exercises {props.exercises}</p>;
+const Total = ({exercises}) => {
+  return <p>Number of exercises {exercises}</p>;
 }
 
 ReactDOM.render(<App />, document.getElementById('root'))
