@@ -29,7 +29,6 @@ const App = () => {
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
   const allFeedback = good + neutral + bad;
-  console.log("App -> good", good)
 
   return (
     <div>
