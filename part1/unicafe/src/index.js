@@ -5,24 +5,33 @@ const Button = ({ text, onClick }) => {
   return <button onClick={onClick}>{text}</button>;
 }
 
-const Statistic = ({ name, number }) => <p>{name} {number || 0}</p>;
+const Statistic = ({ name, number }) => {
+  return (
+    <tr>
+      <td>{name}</td>
+      <td>{number || 0}</td>
+    </tr>
+  )
+}
 
 const Statistics = ({ stats }) => {
   const { good, neutral, bad, allFeedback } = stats;
 
   return (
     <>
-      <h2>Statistics</h2>
+      <h1>Statistics</h1>
       {
         allFeedback !== 0 ?
-          <>
-            <Statistic name={"good"} number={good} />
-            <Statistic name={"neutral"} number={neutral} />
-            <Statistic name={"bad"} number={bad} />
-            <Statistic name={"all"} number={allFeedback} />
-            <Statistic name={"average"} number={(good - bad) / allFeedback} />
-            <Statistic name={"positive"} number={(good / allFeedback) * 100} />
-          </>
+          <table>
+            <tbody>
+              <Statistic name={"good"} number={good} />
+              <Statistic name={"neutral"} number={neutral} />
+              <Statistic name={"bad"} number={bad} />
+              <Statistic name={"all"} number={allFeedback} />
+              <Statistic name={"average"} number={(good - bad) / allFeedback} />
+              <Statistic name={"positive"} number={(good / allFeedback) * 100} />
+            </tbody>
+          </table>
           : "No feedback given"}
     </>
   )
