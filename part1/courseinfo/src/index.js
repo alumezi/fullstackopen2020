@@ -2,28 +2,29 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 const App = () => {
+  let totalExercises = 0;
   const course = 'Half Stack application development'
+  const parts = [
+    {
+      name: 'Fundamentals of React',
+      exercises: 10
+    },
+    {
+      name: 'Using props to pass data',
+      exercises: 7
+    },
+    {
+      name: 'State of a component',
+      exercises: 14
+    }
+  ]
 
-  const part1 = {
-    name: 'Fundamentals of React',
-    exercises: 10
-  }
-  const part2 = {
-    name: 'Using props to pass data',
-    exercises: 7
-  }
-  const part3 = {
-    name: 'State of a component',
-    exercises: 14
-  }
-
+  parts.forEach(item => totalExercises += item.exercises)
   return (
     <div>
       <Header course={course} />
-      <Part part={part1} />
-      <Part part={part2} />
-      <Part part={part3} />
-      <Total exercises={part1.exercises + part2.exercises + part3.exercises} />
+      {parts.map((item, index) => <Part key={index} name={item.name} exercises={item.exercises} />)}
+      <Total exercises={totalExercises} />
     </div>
   )
 }
@@ -32,8 +33,8 @@ const Header = ({ course }) => {
   return <h1>{course}</h1>;
 }
 
-const Part = ({ part }) => {
-  return <p>{part.name} {part.exercises}</p>
+const Part = ({ name, exercises }) => {
+  return <p>{name} {exercises}</p>
 }
 
 const Total = ({ exercises }) => {
