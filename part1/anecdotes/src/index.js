@@ -4,6 +4,9 @@ import ReactDOM from 'react-dom'
 const App = (props) => {
     const [selected, setSelected] = useState(0);
     const [votes, setVotes] = useState(new Array(props.anecdotes.length).fill(0));
+    const mostVotes = votes.reduce((a, b) => Math.max(a, b));
+    const winnerAnecdote = props.anecdotes[votes.indexOf(mostVotes)];
+
     return (
         <>
             <div>
@@ -19,6 +22,18 @@ const App = (props) => {
                 }}>vote</button>
                 <button onClick={() => generateRandomQuote(setSelected)}>next anecdote</button>
             </div>
+            <Winner anecdote={winnerAnecdote} votes={mostVotes} />
+        </>
+    )
+}
+
+const Winner = ({ anecdote, votes }) => {
+    return (
+        <>
+            <h1>Anecdote with most votes</h1>
+            {anecdote}
+            <br />
+            has {votes}
         </>
     )
 }
