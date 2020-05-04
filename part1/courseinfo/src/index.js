@@ -21,6 +21,7 @@ const App = () => {
     totalExercises: 0
   }
   course.parts.forEach(item => course.totalExercises += item.exercises)
+
   return (
     <div>
       <Header course={course.name} />
