@@ -1,5 +1,33 @@
 import React, { useState } from 'react'
 
+const Filter = ({ searchQuery, setSearchQuery }) => {
+    return <>
+        filter show with <input value={searchQuery} onChange={event => setSearchQuery(event.target.value)} />
+    </>
+}
+
+const PersonForm = ({ addPerson, newName, newNumber, setNewName, setNewNumber }) => {
+    return <form onSubmit={addPerson}>
+        <div>
+            <div>
+                name: <input value={newName} onChange={event => setNewName(event.target.value)} />
+            </div>
+            <div>
+                number: <input value={newNumber} onChange={event => setNewNumber(event.target.value)} />
+            </div>
+        </div>
+        <div>
+            <button type="submit">add</button>
+        </div>
+    </form>
+}
+
+const Persons = ({ persons, searchQuery }) => {
+    return persons.filter(person => person.name.toLowerCase().includes(searchQuery.toLowerCase()))
+        .map(person => <div key={person.name}>{person.name}  {person.number}</div>)
+}
+
+
 const App = () => {
     const [persons, setPersons] = useState([
         { name: 'Arto Hellas', number: '040-123456' },
@@ -29,28 +57,17 @@ const App = () => {
 
     return (
         <div>
-            <h2>Phonebook</h2>
-            filter show with <input value={searchQuery} onChange={event => setSearchQuery(event.target.value)} />
-            <form onSubmit={addPerson}>
-                <div>
-                    <div>
-                        name: <input value={newName} onChange={event => setNewName(event.target.value)} />
-                    </div>
-                    <div>
-                        number: <input value={newNumber} onChange={event => setNewNumber(event.target.value)} />
-                    </div>
-                </div>
-                <div>
-                    <button type="submit">add</button>
-                </div>
-            </form>
+            <h1>Phonebook</h1>
+            <Filter searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+            <h3>Add a new</h3>
+            <PersonForm
+                addPerson={addPerson}
+                newName={newName}
+                newNumber={newNumber}
+                setNewName={setNewName}
+                setNewNumber={setNewNumber} />
             <h2>Numbers</h2>
-            <div >
-                {
-                    persons.filter(person => person.name.toLowerCase().includes(searchQuery.toLowerCase()))
-                        .map(person => <div key={person.name}>{person.name}  {person.number}</div>)
-                }
-            </div>
+            <Persons persons={persons} searchQuery={searchQuery} />
         </div>
     )
 }
