@@ -18,11 +18,19 @@ export const App = (props) => {
         })()
     }, [query])
 
+    const showDetails = (event, country) => {
+        event.preventDefault();
+        setCountries([]);
+        setFirstCountry(country)
+        setQuery('');
+    }
+
+
     return (
         <>
             find countries<input type="search" name="countries" onChange={event => setQuery(event.target.value)} value={query} />
             {countries.length > 10 ? <div>Too many matches, specify another filter</div> :
-                (countries.length > 1 ? countries.map(country => <div key={country.name}>{country.name}</div>) :
+                (countries.length > 1 ? countries.map(country => <div key={country.name}>{country.name} <button onClick={event => showDetails(event, country)}>show</button></div>) :
                     <>
                         <h1>{firstCountry.name}</h1>
                         <p>Capital {firstCountry.capital}</p>
