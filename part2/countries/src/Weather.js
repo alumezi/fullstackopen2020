@@ -22,7 +22,7 @@ export const Weather = ({countryName}) => {
         <>
             <h1>Weather in {countryName}</h1>
             <div>temperature: {weather.current && weather.current.temperature}</div>
-            <img src={weather.current && weather.current.weather_icons[0]} width="100" />
+            <img src={weather.current && weather.current.weather_icons[0]} width="100" alt="Weather Icon" />
             <div>wind: {weather.current && weather.current.wind_speed} direction {weather.current && weather.current.wind_dir}</div>
         </>
     )

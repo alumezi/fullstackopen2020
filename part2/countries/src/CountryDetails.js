@@ -15,7 +15,7 @@ export const CountryDetails = ({ firstCountry }) => {
             <ul>
                 {firstCountry.languages.map(lang => <li key={lang.name}>{lang.name}</li>)}
             </ul>
-            <img src={firstCountry.flag} width="200" />
+            <img src={firstCountry.flag} alt="Country flag" width="200" />
             <Weather countryName={firstCountry.name} />
         </>
     )
