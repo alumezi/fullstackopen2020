@@ -29,6 +29,7 @@ export const App = (props) => {
         setFirstCountry(country)
         setQuery('');
     }
+    
     return (
         <>
             find countries<input type="search" name="countries" onChange={event => setQuery(event.target.value)} value={query} />
