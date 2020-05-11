@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { createPerson, getAll } from './services/numbers';
 
 const Filter = ({ searchQuery, setSearchQuery }) => {
     return <>
@@ -36,14 +36,17 @@ const App = () => {
     const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
-        axios.get('http://localhost:3001/persons')
-            .then(response => {
-                setPersons(response.data);
-            })
+        getAll()
+            .then(data => setPersons(data))
+            .catch(error => console.error(error))
     }, []);
 
     const addPerson = (event) => {
         event.preventDefault();
+
+        if (!newName) {
+            return
+        }
 
         if (persons.findIndex(person => person.name === newName) !== -1) {
             alert(`${newName} is already added to phonebook`);
@@ -53,9 +56,9 @@ const App = () => {
             name: newName,
             number: newNumber
         }
-        axios.post("http://localhost:3001/persons", personObject)
-            .then(response => {
-                setPersons(persons.concat(response.data));
+        createPerson(personObject)
+            .then(data => {
+                setPersons(persons.concat(data));
                 setNewName('');
                 setNewNumber('');
             })
