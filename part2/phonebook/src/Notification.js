@@ -1,12 +1,12 @@
 import React from 'react';
 
-export const Notification = ({ message }) => {
-    if (message === null) {
+export const Notification = ({ message, error }) => {
+    if (message === null && error === null) {
         return null
     }
 
     const componentStyle = {
-        color: 'green',
+        color: error ? 'red' : 'green',
         background: 'lightgrey',
         fontSize: '20px',
         borderStyle: 'solid',
@@ -17,7 +17,7 @@ export const Notification = ({ message }) => {
 
     return (
         <div style={componentStyle}>
-            {message}
+            {message || error}
         </div>
     )
 }

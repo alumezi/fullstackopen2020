@@ -16,6 +16,7 @@ const App = () => {
     const [newNumber, setNewNumber] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
     const [notification, setNotification] = useState(null);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         getAll()
@@ -34,6 +35,8 @@ const App = () => {
                 })
                 .catch(error => {
                     console.error(error)
+                    addError(`Information of ${name} was deleted from server`);
+                    setPersons(persons.filter(item => item.id === id));
                 })
         }
     }
@@ -43,6 +46,13 @@ const App = () => {
         setTimeout(() => {
             setNotification(null)
         }, 5000)
+    }
+
+    const addError = (message) => {
+        setError(message);
+        setTimeout(() => {
+            setError(null)
+        }, 5000)  
     }
 
     const addPerson = (event) => {
@@ -73,6 +83,8 @@ const App = () => {
                         })
                         .catch(error => {
                             console.error(error)
+                            addError(`Information of ${searchPerson.name} was deleted from server`);
+                            setPersons(persons.filter(item => item.id !== searchPerson.id))
                         })
                 }
             } else {
@@ -95,7 +107,7 @@ const App = () => {
     return (
         <div>
             <h1>Phonebook</h1>
-            <Notification message={notification} />
+            <Notification message={notification} error={error} />
             <Filter searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
             <h3>Add a new</h3>
             <PersonForm
