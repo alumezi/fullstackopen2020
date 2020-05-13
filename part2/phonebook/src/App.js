@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { createPerson, getAll } from './services/numbers';
+import { createPerson, getAll, deletePerson } from './services/numbers';
 import { PersonForm } from './PersonForm';
 import { Filter } from './Filter';
 import { Persons } from './Persons';
@@ -15,6 +15,20 @@ const App = () => {
             .then(data => setPersons(data))
             .catch(error => console.error(error))
     }, []);
+
+
+    const removeEntry = (event, id, name) => {
+        event.preventDefault();
+        if (window.confirm(`Are you sure you want to delete ${name} ?`)) {
+            deletePerson(id)
+                .then(() => {
+                    setPersons(persons.filter(item => item.id !== id))
+                })
+                .catch(error => {
+                    console.error(error)
+                })
+        }
+    }
 
     const addPerson = (event) => {
         event.preventDefault();
@@ -54,7 +68,7 @@ const App = () => {
                 setNewName={setNewName}
                 setNewNumber={setNewNumber} />
             <h2>Numbers</h2>
-            <Persons persons={persons} searchQuery={searchQuery} />
+            <Persons persons={persons} searchQuery={searchQuery} removeEntry={removeEntry} />
         </div>
     )
 }
