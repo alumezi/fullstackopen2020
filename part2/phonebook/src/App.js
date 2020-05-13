@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { createPerson, getAll, deletePerson } from './services/numbers';
+import {
+    createPerson,
+    getAll,
+    deletePerson,
+    updatePerson
+} from './services/numbers';
 import { PersonForm } from './PersonForm';
 import { Filter } from './Filter';
 import { Persons } from './Persons';
@@ -37,14 +42,33 @@ const App = () => {
             return
         }
 
-        if (persons.findIndex(person => person.name === newName) !== -1) {
-            alert(`${newName} is already added to phonebook`);
-            return;
-        }
+        let searchPerson = persons.find(person => person.name.toLowerCase() === newName.toLowerCase());
         const personObject = {
             name: newName,
             number: newNumber
         }
+
+        if (searchPerson) {
+            if (searchPerson.number !== newNumber) {
+                if (window.confirm(`${searchPerson.name} is already added to the phonebook, replace the old number with the new one?`)) {
+                    return updatePerson(personObject, searchPerson.id)
+                        .then(data => {
+                            let index = persons.findIndex(item => item.id === data.id);
+                            let personsCopy = [...persons];
+                            personsCopy.splice(index, 1, data);
+                            setPersons(personsCopy);
+                            setNewName('');
+                            setNewNumber('');
+                        })
+                        .catch(error => {
+                            console.error(error)
+                        })
+                }
+            } else {
+                return alert(`${newName} is already added to phonebook`);
+            }
+        }
+
         createPerson(personObject)
             .then(data => {
                 setPersons(persons.concat(data));
