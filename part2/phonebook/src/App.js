@@ -1,33 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { createPerson, getAll } from './services/numbers';
-
-const Filter = ({ searchQuery, setSearchQuery }) => {
-    return <>
-        filter show with <input value={searchQuery} onChange={event => setSearchQuery(event.target.value)} />
-    </>
-}
-
-const PersonForm = ({ addPerson, newName, newNumber, setNewName, setNewNumber }) => {
-    return <form onSubmit={addPerson}>
-        <div>
-            <div>
-                name: <input value={newName} onChange={event => setNewName(event.target.value)} />
-            </div>
-            <div>
-                number: <input value={newNumber} onChange={event => setNewNumber(event.target.value)} />
-            </div>
-        </div>
-        <div>
-            <button type="submit">add</button>
-        </div>
-    </form>
-}
-
-const Persons = ({ persons, searchQuery }) => {
-    return persons.filter(person => person.name.toLowerCase().includes(searchQuery.toLowerCase()))
-        .map(person => <div key={person.name}>{person.name}  {person.number}</div>)
-}
-
+import { PersonForm } from './PersonForm';
+import { Filter } from './Filter';
+import { Persons } from './Persons';
 
 const App = () => {
     const [persons, setPersons] = useState([]);
