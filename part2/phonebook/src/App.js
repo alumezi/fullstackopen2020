@@ -63,15 +63,11 @@ const App = () => {
         }
 
         let searchPerson = persons.find(person => person.name.toLowerCase() === newName.toLowerCase());
-        const personObject = {
-            name: newName,
-            number: newNumber
-        }
 
         if (searchPerson) {
             if (searchPerson.number !== newNumber) {
                 if (window.confirm(`${searchPerson.name} is already added to the phonebook, replace the old number with the new one?`)) {
-                    return updatePerson(personObject, searchPerson.id)
+                    return updatePerson({ number: newNumber }, searchPerson.id)
                         .then(data => {
                             let index = persons.findIndex(item => item.id === data.id);
                             let personsCopy = [...persons];
@@ -96,7 +92,7 @@ const App = () => {
             }
         }
 
-        createPerson(personObject)
+        createPerson({ name: newName, number: newNumber })
             .then(data => {
                 setPersons(persons.concat(data));
                 setNewName('');
