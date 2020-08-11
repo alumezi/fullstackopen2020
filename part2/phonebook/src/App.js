@@ -82,9 +82,13 @@ const App = () => {
                             addNotification(`Updated ${data.name}`)
                         })
                         .catch(error => {
-                            console.error(error)
-                            addError(`Information of ${searchPerson.name} was deleted from server`);
-                            setPersons(persons.filter(item => item.id !== searchPerson.id))
+                            console.error(error);
+                            if (error.response) {
+                                addError(error.response.data.error);
+                            } else {
+                                addError(`Information of ${searchPerson.name} was deleted from server`);
+                                setPersons(persons.filter(item => item.id !== searchPerson.id))
+                            }
                         })
                 }
             } else {
