@@ -52,7 +52,7 @@ const App = () => {
         setError(message);
         setTimeout(() => {
             setError(null)
-        }, 5000)  
+        }, 5000)
     }
 
     const addPerson = (event) => {
@@ -100,7 +100,10 @@ const App = () => {
                 addNotification(`Added ${data.name}`)
             })
             .catch(error => {
-                console.error(error)
+                console.error(error);
+                if (error.response) {
+                    addError(error.response.data.error);
+                }
             })
     }
 
